@@ -1,6 +1,10 @@
 # UrlBuilder
 UrlBuilder is simple and powerful URL builder.
 
+Get it on NuGet:
+
+`PM> Install-Package UrlBuilder`
+
 ````c#
 [TestMethod]
 public void Test()
@@ -14,7 +18,7 @@ public void Test()
 }
 ````
 
-How to work with query params:
+Working with query params:
 ------------------------------
 * Get query param
 ````c#
@@ -39,7 +43,7 @@ url.RemoveQueryParams(new List<string> { "event", "role" });
 url.AppendQueryParam("nid", 321);
 ````
 
-How to work with path segments:
+Working with path segments:
 -------------------------------
 * Get and set path
 ````c#
@@ -51,7 +55,3 @@ How to work with path segments:
 	url.AddPathSegment("test");
 	url.RemovePathSegment("test");
 ````
-
-Get it on NuGet:
-
-`PM> Install-Package UrlBuilder`
