@@ -47,11 +47,11 @@ Working with path segments:
 -------------------------------
 * Get and set path
 ````c#
-	url.SetPath("app/events");
-	url.GetPath();
+url.SetPath("app/events");
+url.GetPath();
 ````
 * Add and remove path segment
 ````c#
-	url.AddPathSegment("test");
-	url.RemovePathSegment("test");
+url.AddPathSegment("test");
+url.RemovePathSegment("test");
 ````
