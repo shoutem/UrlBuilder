@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("UrlBuilder")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Shoutem, Inc")]
+[assembly: AssemblyCompany("Shoutem, Inc.")]
 [assembly: AssemblyProduct("UrlBuilder")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
