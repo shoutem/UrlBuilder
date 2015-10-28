@@ -57,6 +57,7 @@
     <Compile Include="PathTest.cs" />
     <Compile Include="QueryParamTest.cs" />
     <Compile Include="ToStringTest.cs" />
+    <Compile Include="TrailingSlashTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UrlBuilder\UrlBuilder.csproj">

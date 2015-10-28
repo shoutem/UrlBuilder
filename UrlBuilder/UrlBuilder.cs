@@ -21,6 +21,7 @@
         private UriBuilder uriBuilder;
         private IList<string> segments;
         private QueryParamCollection queryParams;
+        private bool hasTrailingSlash;
 
         /// <summary>
         /// Gets the scheme name of the UrlBuilder.
@@ -103,7 +104,14 @@
         /// </summary>
         public string GetPath()
         {
-            return string.Join("/", segments);
+            var path = string.Join("/", segments);
+
+            if (segments.Count > 0 && hasTrailingSlash)
+            {
+                path += "/";
+            }
+
+            return path;
         }
 
         /// <summary>
@@ -117,7 +125,14 @@
             }
 
             segments.Clear();
-            Parse(path);
+
+            var segmentStrings = path.Split('/').ToList();
+            foreach (var segment in segmentStrings)
+            {
+                AddPathSegment(segment);
+            }
+
+            hasTrailingSlash = path.EndsWith("/");
             return this;
         }
 
@@ -181,27 +196,11 @@
         {
             uriBuilder = new UriBuilder(baseUrl);
             segments = new List<string>();
-            Parse(uriBuilder.Path);
+            hasTrailingSlash = false;
+            SetPath(uriBuilder.Path);
 
             var query = uriBuilder.Query.TrimStart('?');
             queryParams = QueryParamCollection.Parse(query.Length > 1 ? query : string.Empty);
-        }
-
-        /// <summary>
-        /// Parse path into text segments
-        /// </summary>
-        /// <param name="path"></param>
-        private void Parse(string path)
-        {
-            var segmentsText = path.Split('/').ToList();
-
-            foreach (var segment in segmentsText)
-            {
-                if (!string.IsNullOrWhiteSpace(segment))
-                {
-                    AddPathSegment(segment);
-                }
-            }
         }
 
         /// <summary>
@@ -221,7 +220,7 @@
         /// <returns></returns>
         private static string CleanSegment(string segment) {
             var unescaped = Uri.UnescapeDataString(segment);
-            return Uri.EscapeUriString(unescaped).Replace("?", "%3F").Trim().TrimStart('/');
+            return Uri.EscapeUriString(unescaped).Replace("?", "%3F").Trim().TrimStart('/').TrimEnd('/');
         }
 
         /// <summary>
@@ -254,7 +253,13 @@
             if (segment == null)
                 throw new ArgumentNullException("segment");
 
-            segments.Add(CleanSegment(segment));
+            var cleanSegment = CleanSegment(segment);
+            if (!string.IsNullOrEmpty(cleanSegment))
+            {
+                segments.Add(cleanSegment);
+            }
+
+            hasTrailingSlash = segment.EndsWith("/");
             return this;
         }
 
